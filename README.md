@@ -13,7 +13,7 @@
 ### Passos para Iniciar o Projeto
 
 1. **Clone o Repositório**:
-    git clone https://github.com/RAFiSGODOY/Agendei-ReactNative-jsx.git
+    git clone https://github.com/RAFiSGODOY/Agendei-Mobile-React-Native.jsx-Node.js
 
 2. **Navegue até o Diretório do Projeto**:
     cd NomeDoSeuProjeto
