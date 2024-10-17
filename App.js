@@ -1,7 +1,7 @@
-import Login from "./src/screens/login/login.jsx";
+import Main from "./src/screens/main/main";
 
 export default function App() {
   return (
-    <Login />
+    <Main />
   );
 }

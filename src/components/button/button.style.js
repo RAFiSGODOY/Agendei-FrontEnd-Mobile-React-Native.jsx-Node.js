@@ -4,10 +4,16 @@
  export const styles = {
     btn:{
     width:'100%',
-    backgroundColor:COLORS.primary,
     padding:12,
     borderRadius:6,  
     },
+
+    primary:{
+     backgroundColor:COLORS.primary,
+    },
+    danger:{
+        backgroundColor:COLORS.second,
+       },
 
     text:{
         color:COLORS.terciary,
