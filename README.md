@@ -1,6 +1,6 @@
 # Agendei-ReactNative-jsx - Projeto Iniciado 15-10-2024
 
-   Aplicativo mobile desenvolvido em React Native para agendamento de consultas para pacientes com médicos, com aplicativo desenvolvido em react native jsx e um painel de controle web com react js. Com uma arquitetura avançada, o código é de fácil manutenção e documentado. Oferece temas personalizados e    uma interface intuitiva, garantindo uma experiência fluida para os usuários. Criado no projeto "Jornada de JS" do canal Dev Point. Desenvolvido para Android e Ios. Api em Node.js.
+   Aplicativo mobile desenvolvido em React Native para agendamento de consultas para pacientes com médicos, com aplicativo desenvolvido em react native jsx e um painel de controle web com react js. Com uma arquitetura avançada, o código é de fácil manutenção e documentado. Oferece temas personalizados e    uma interface intuitiva, garantindo uma experiência fluida para os usuários. Criado no projeto "Jornada de JS" do canal Dev Point. Desenvolvido para Android e Ios. Api em Node.js. Testes Feitos atraves do Postman.
    
 
 ## Iniciando o Projeto
