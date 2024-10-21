@@ -23,6 +23,14 @@ export const styles = {
     padding: 10,
     borderRadius: 6,
     marginBottom:10,
+    shadowColor: '#000', // Sombra para dar profundidade
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 2, // Para Android
 
   },
 

@@ -10,7 +10,16 @@ export const styles = {
         padding: 12,
         borderWidth: 1,
         borderColor: COLORS.gray4,
-
+        marginBottom:10,
+        borderRadius:6,
+        shadowColor: '#000', // Sombra para dar profundidade
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 2, // Para Android
 
     },
 

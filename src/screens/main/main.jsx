@@ -15,7 +15,6 @@ const Tab= createBottomTabNavigator();
 
 function Main() {
     return (
-        <NavigationContainer>
             <Tab.Navigator>
                 <Tab.Screen  name="Home" component={abahome} options={{
                     headerTitleAlign:'center',
@@ -42,11 +41,10 @@ function Main() {
                         return <Text style={{
                             color:COLORS.primary,
                             fontSize:FONT_SIZE.lg,
-                        }}>
-                             Minhas Reservas
-                        </Text>
+                        }}>Minhas Reservas </Text>
                     },
                     tabBarShowLabel:false,
+                    unmountOnBlur: true,
                     tabBarIcon: ({focused}) => {
                         return <Image source={icon.calendar} style={{
                             width:25, 
@@ -63,11 +61,10 @@ function Main() {
                         return <Text style={{
                             color:COLORS.primary,
                             fontSize:FONT_SIZE.lg,
-                        }}>
-                       Meu Perfil
-                   </Text>
+                        }}>Meu Perfil </Text>
                     },
                     tabBarShowLabel:false,
+                    unmountOnBlur: true,
                     tabBarIcon: ({focused}) => {
                         return <Image source={icon.profile} style={{
                             width:25, 
@@ -79,7 +76,6 @@ function Main() {
                 }} />
 
             </Tab.Navigator>
-        </NavigationContainer>
     )
 
 }

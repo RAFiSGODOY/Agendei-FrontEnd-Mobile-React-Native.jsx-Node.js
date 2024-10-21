@@ -1,9 +1,11 @@
-import { Text, TextInput, TouchableOpacity, View, Image, Alert } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, Image} from "react-native";
 import icon from "../../constants/icon.js";
 import { styles } from "./account.style.js";
 import  Button  from "../../components/button/button.jsx";
 import { useState } from "react";
 import api from "../../constants/api.js";
+import AlertModal from "../../components/modal/modal.jsx";
+
 
 function Account(props) {
 
@@ -11,10 +13,17 @@ function Account(props) {
     const[name, setName] = useState("");
     const[email, setEmail] = useState(""); 
     const[password, setPassword] = useState("");
-    
+    const [modalVisible, setModalVisible] = useState(false);
+    const [textModal, setTextModal] = useState("");
+    const [loading, setLoading] = useState(false); // Inicializa como true
+    const closeModal = () => {
+        setModalVisible(false);
+    };
 
     async function ExecuteCadastro(){
-        try{
+        if(name&&email&&password){
+            setLoading(true); 
+           try{
             const response = await api.post("/users/register",{
              name,
              email, 
@@ -23,19 +32,36 @@ function Account(props) {
 
            if(response.data){
             console.log(response.data);
-            Alert.alert("Conta criada com sucesso...");
-            props.navigation.navigate("login");
+            setTextModal("Conta criada com sucesso!");
+            setModalVisible(true);
+            setTimeout(() => {
+                props.navigation.navigate("login");
+            }, 3000);
+            
            }
 
         }catch(error){
-            if(error.response?.data.error)
-                Alert.alert(error.response.data.error);
-             else 
-                Alert.alert("Ocorreu um erro. Tente novamente mais tarde");
+            if(error.response?.data.error){
+                setTextModal(error.response.data.error);
+                setModalVisible(true);
+            }else if(name == " " ||password==" " || email == " ") {
+             setTextModal("Por favor, preencha todos os campos.");
+             setModalVisible(true);
+            } else{
+                setTextModal("Ocorreu um erro. Tente novamente mais tarde. ");
+                setModalVisible(true);
+               }
             
             
 
+        }finally {
+            setLoading(false);
         }
+        }else{
+            setTextModal("Por favor, preencha todos os campos.");
+            setModalVisible(true);
+        }
+       
     }
     return (
         <View style={styles.container}>
@@ -65,7 +91,7 @@ function Account(props) {
                         secureTextEntry={true} 
                         onChangeText={(text) => setPassword(text)}/>
                 </View>
-                <Button text="Criar Conta" onPress={ExecuteCadastro}/>
+                <Button onPress={ExecuteCadastro} loading={loading} text={loading ? "" : "Criar Conta"} />
             </View>
 
             <View style={styles.footer}>
@@ -76,7 +102,7 @@ function Account(props) {
             </View>
 
 
-
+            <AlertModal modalVisible={modalVisible} text={textModal} onClose={closeModal}/>
 
         </View>
 
