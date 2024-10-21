@@ -2,6 +2,8 @@ import {View, Text} from "react-native";
 import Button from "../../components/button/button.jsx";
 import {styles} from "./service.style.js";
 function Service(props){
+
+
    return(
       <View style={styles.service}>
         <View style={styles.containerText}>
@@ -15,7 +17,7 @@ function Service(props){
         </View>
 
         <View style={styles.containerButton}>
-            <Button text="Agendar"/>
+            <Button text="Agendar" onPress={() => props.onPress(props.id_service)}/>
         </View>
 
       </View>

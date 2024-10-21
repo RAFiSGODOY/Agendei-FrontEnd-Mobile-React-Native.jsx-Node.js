@@ -2,15 +2,14 @@
 
  export const styles = {
     container:{
-      backgroundColor:COLORS.background,
       flex:1,
-      justifyContent:'space-between',
+      backgroundColor:COLORS.background,
       padding:40,
+      justifyContent:'space-around'
     },
 
     containerLogo:{
-        alignItemns:"center",
-
+        alignItems:"center"
     },
 
     logo:{
@@ -22,24 +21,23 @@
         backgroundColor:COLORS.gray5,
         padding:10,
         borderRadius:6,
-    },
-
-    containerInput:{
-        marginBottom:15,
+        marginBottom:10
     },
 
     footer:{
-        alignItemns:'center',
+        alignItems:'center',
         flexDirection:'row',
         justifyContent:'center',
 
     },
     footerText:{
+      alignItems:'center',
      color:COLORS.gray3,
     },
 
     footerLink:{
       color:COLORS.primary,
+      
     },
     
 }
