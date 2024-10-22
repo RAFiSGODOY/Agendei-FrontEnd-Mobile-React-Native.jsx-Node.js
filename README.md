@@ -2,7 +2,9 @@
 
 O aplicativo móvel para agendamento de consultas foi desenvolvido em React Native, permitindo que pacientes agendem consultas com médicos de forma prática. A solução inclui um painel de controle web criado em React.js, ambos projetados com uma arquitetura avançada que facilita a manutenção e a documentação.
 
-Com temas personalizados e uma interface intuitiva, o aplicativo oferece uma experiência de usuário fluida e agradável. Este projeto foi realizado como parte da "Jornada de JS" do canal Dev Point e é compatível com Android e iOS. A API foi desenvolvida em Node.js, e todos os testes foram conduzidos com o Postman, garantindo a qualidade e robustez da aplicação.
+Com temas personalizados e uma interface intuitiva, o aplicativo oferece uma experiência de usuário fluida e agradável. Compatível com Android e iOS. A API foi desenvolvida em Node.js, e todos os testes foram conduzidos com o Postman, garantindo a qualidade e robustez da aplicação.
+
+
 # STATUS: FINALIZADO
 
 ## Iniciando o Projeto
