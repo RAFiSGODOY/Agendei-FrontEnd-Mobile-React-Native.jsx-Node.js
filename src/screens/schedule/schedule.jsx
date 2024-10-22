@@ -2,11 +2,13 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { styles } from "./schedule.style.js";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { ptBR } from "../../constants/calendar.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
 import Button from "../../components/button/button.jsx";
 import AlertModal from "../../components/modal/modal.jsx";
 import api from "../../constants/api.js";
+import { COLORS } from "../../constants/theme.js";
+import CustomPicker from "../../components/picker/picker.jsx";
 
 LocaleConfig.locales["pt-br"] = ptBR;
 LocaleConfig.defaultLocale = "pt-br";
@@ -15,27 +17,68 @@ function Schedule(props) {
     const id_doctor = props.route.params.id_doctor;
     const id_service = props.route.params.id_service;
 
-    const [selectedDate, setSelectdDate] = useState("");
-    const [selectedHour, setSelectdHour] = useState("");
+    const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
+    const [selectedHour, setSelectedHour] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const [textModal, setTextModal] = useState("Ocorreu um erro. Tente novamente mais tarde");
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
+    const [availableHours, setAvailableHours] = useState([]);
 
     const closeModal = () => {
         setModalVisible(false);
     };
 
+    async function fetchAvailableHours() {
+        if (!selectedDate) return;
+        try {
+            const response = await api.get(`/appointments/check?booking_date=${selectedDate}&id_doctor=${id_doctor}&id_service=${id_service}`);
+            setAvailableHours(response.data || []);
+        } catch (error) {
+            console.error(error);
+            setTextModal("Erro ao buscar horários disponíveis.");
+            setModalVisible(true);
+        }
+    }
+
+    useEffect(() => {
+        if (selectedDate) {
+            fetchAvailableHours();
+        }
+    }, [selectedDate]);
+
+    async function checkUserAppointments(id_user, booking_date, booking_hour) {
+        try {
+            const response = await api.get(`/appointments/check?userId=${id_user}&booking_date=${booking_date}&booking_hour=${booking_hour}`);
+            return response.data;
+        } catch (error) {
+            console.error("Erro ao verificar agendamentos:", error);
+            return false; // Retorna false em caso de erro
+        }
+    }
+    
     async function ClickBooking() {
-        
-        if (selectedDate && selectedHour) { 
+        if (selectedDate && selectedHour) {
             setLoading(true);
             try {
+                const userId = props.route.params.id_user;
+    
+                // Verifica se o usuário já possui uma consulta na mesma data e hora
+                const hasAppointment = await checkUserAppointments(userId, selectedDate, selectedHour);
+                if (hasAppointment) {
+                    setTextModal("Você já possui um agendamento nessa data e hora. Por favor, escolha outra hora.");
+                    setModalVisible(true);
+                    return;
+                }
+    
+                // Prossegue com o agendamento se não houver conflitos
                 const response = await api.post("/appointments", {
                     id_doctor,
                     id_service,
+                    id_user: userId,
                     booking_date: selectedDate,
-                    booking_hour: selectedHour
+                    booking_hour: selectedHour,
                 });
+    
                 if (response.data?.id_appointment) {
                     setTextModal("Agendamento concluído! Redirecionando...");
                     setModalVisible(true);
@@ -46,8 +89,10 @@ function Schedule(props) {
             } catch (error) {
                 if (error.response?.data.error) {
                     setTextModal(error.response.data.error);
-                    setModalVisible(true);
-                } 
+                } else {
+                    setTextModal("Ocorreu um erro. Tente novamente mais tarde.");
+                }
+                setModalVisible(true);
             } finally {
                 setLoading(false);
             }
@@ -58,44 +103,48 @@ function Schedule(props) {
         }
     }
     
+    
+
+    
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        date.setUTCHours(0, 0, 0, 0); 
+        return date.getUTCDate(); 
+    };
 
     return (
         <View style={styles.container}>
-        <View>
-            <Calendar theme={styles.theme}
+            <Calendar
+                theme={styles.theme}
                 onDayPress={(day) => {
-                    setSelectdDate(day.dateString)
+                    setSelectedDate(day.dateString);
                 }}
                 markedDates={{ [selectedDate]: { selected: true } }}
                 minDate={new Date().toDateString()}
-
             />
 
-            <View>
-                <Text style={styles.textHour}>
-                    Horário
-                </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'center'}}>
+
+                <Text style={styles.textHour}>Horários disponíveis para o dia: </Text>
+                <View style={styles.Circulo}>
+                    <Text style={styles.textHour2}>{formatDate(selectedDate)}</Text>
+                </View>
             </View>
 
+            <View >
+            <CustomPicker 
+                selectedValue={selectedHour} 
+                options={availableHours} 
+                onValueChange={setSelectedHour} 
+            />
 
+            </View>
 
             <View>
-                <Picker selectedValue={selectedHour} onValueChange={(itemValue, itemIndex) => {
-                    setSelectdHour(itemValue)
-                }}>
-                    <Picker.Item label="09:00" value="09:00" />
-                    <Picker.Item label="09:30" value="09:30" />
-                    <Picker.Item label="10:00" value="10:00" />
-                    <Picker.Item label="10:30" value="10:30" />
-                    <Picker.Item label="11:00" value="11:00" />
-                </Picker>
+                <Button onPress={ClickBooking} loading={loading} text={loading ? "Carregando..." : "Confirmar Reserva"} />
             </View>
+            <AlertModal modalVisible={modalVisible} text={textModal} onClose={closeModal} />
         </View>
-        <View>
-        <Button onPress={ClickBooking} loading={loading} text={loading ? "" : "Confirmar Reserva"} />
-        </View>
-        <AlertModal modalVisible={modalVisible} text={textModal} onClose={closeModal} />
-    </View>
     );
 }
 

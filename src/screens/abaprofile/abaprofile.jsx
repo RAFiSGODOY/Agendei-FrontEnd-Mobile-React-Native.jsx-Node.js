@@ -24,7 +24,6 @@ function AbaProfile() {
             if (response.data?.name) {
                 setName(response.data.name);
                 setEmail(response.data.email);
-                console.log(response.data)
             }
 
         } catch (error) {
