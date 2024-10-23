@@ -9,6 +9,7 @@ import { COLORS } from "../../constants/theme.js";
 
 function Services(props) {
     const id_doctor = props.route.params.id_doctor;
+    const id_user = props.route.params.id_user;
     const name = props.route.params.name;
     const specialty = props.route.params.specialty;
     const iconDoctor = props.route.params.icon;
@@ -22,7 +23,7 @@ function Services(props) {
     };
 
     function ClickService(id_service) {
-        props.navigation.navigate("schedule", { id_doctor, id_service });
+        props.navigation.navigate("schedule", { id_doctor, id_service, id_user });
     }
 
     async function LoadServices() {

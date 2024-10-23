@@ -16,6 +16,7 @@ LocaleConfig.defaultLocale = "pt-br";
 function Schedule(props) {
     const id_doctor = props.route.params.id_doctor;
     const id_service = props.route.params.id_service;
+    const id_user = props.route.params.id_user;
 
     const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
     const [selectedHour, setSelectedHour] = useState("");
@@ -31,7 +32,7 @@ function Schedule(props) {
     async function fetchAvailableHours() {
         if (!selectedDate) return;
         try {
-            const response = await api.get(`/appointments/check?booking_date=${selectedDate}&id_doctor=${id_doctor}&id_service=${id_service}`);
+            const response = await api.get(`/appointments/check?booking_date=${selectedDate}`);
             setAvailableHours(response.data || []);
         } catch (error) {
             console.error(error);
@@ -45,36 +46,15 @@ function Schedule(props) {
             fetchAvailableHours();
         }
     }, [selectedDate]);
-
-    async function checkUserAppointments(id_user, booking_date, booking_hour) {
-        try {
-            const response = await api.get(`/appointments/check?userId=${id_user}&booking_date=${booking_date}&booking_hour=${booking_hour}`);
-            return response.data;
-        } catch (error) {
-            console.error("Erro ao verificar agendamentos:", error);
-            return false; // Retorna false em caso de erro
-        }
-    }
     
     async function ClickBooking() {
         if (selectedDate && selectedHour) {
             setLoading(true);
             try {
-                const userId = props.route.params.id_user;
-    
-                // Verifica se o usuário já possui uma consulta na mesma data e hora
-                const hasAppointment = await checkUserAppointments(userId, selectedDate, selectedHour);
-                if (hasAppointment) {
-                    setTextModal("Você já possui um agendamento nessa data e hora. Por favor, escolha outra hora.");
-                    setModalVisible(true);
-                    return;
-                }
-    
-                // Prossegue com o agendamento se não houver conflitos
                 const response = await api.post("/appointments", {
                     id_doctor,
                     id_service,
-                    id_user: userId,
+                    id_user,
                     booking_date: selectedDate,
                     booking_hour: selectedHour,
                 });
@@ -97,11 +77,13 @@ function Schedule(props) {
                 setLoading(false);
             }
         } else {
-            setTextModal("Ops, selecione a Data e Hora de seu agendamento!");
+            setTextModal("Ops, selecione a Data e Hora do seu agendamento!");
             setModalVisible(true);
             setLoading(false);
         }
     }
+    
+    
     
     
 
