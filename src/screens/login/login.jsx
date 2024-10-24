@@ -6,6 +6,9 @@ import { useContext, useState } from "react";
 import api from "../../constants/api.js";
 import AlertModal from "../../components/modal/modal.jsx";
 import { AuthContext } from "../../contexts/auth.js";
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS } from "../../constants/theme.js";
+
 
 function Login(props) {
     const { setUser } = useContext(AuthContext);
@@ -14,6 +17,8 @@ function Login(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [textModal, setTextModal] = useState("Ocorreu um erro. Tente novamente mais tarde");
     const [loading, setLoading] = useState(false); // Inicializa como false
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
 
     const closeModal = () => {
         setModalVisible(false);
@@ -65,14 +70,22 @@ function Login(props) {
                     <TextInput
                         style={styles.input}
                         placeholder="Senha"
-                        secureTextEntry={true}
+                        secureTextEntry={!isPasswordVisible}
                         onChangeText={setPassword}
                     />
+                    <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+                        <Ionicons
+                            name={isPasswordVisible ? "eye-off" : "eye"}
+                            size={24}
+                            color={COLORS.gray2}
+                            style={{marginRight:10}}
+                        />
+                    </TouchableOpacity>
                 </View>
-                
+
                 <Button onPress={ExecuteLogin} loading={loading} text={loading ? "" : "Acessar"} />
             </View>
-            <View style={styles.footer}> 
+            <View style={styles.footer}>
                 <Text style={styles.footerText}>Não tenho conta. </Text>
                 <TouchableOpacity onPress={() => props.navigation.navigate("account")}>
                     <Text style={styles.footerLink}>Criar conta. </Text>

@@ -16,20 +16,28 @@
       width: 190, 
       height: 45,
     },
+    containerInput: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor:COLORS.gray5,
+      borderRadius:6,
+      marginBottom:15,
+      shadowColor: '#000', // Sombra para dar profundidade
+      shadowOffset: {
+          width: 0,
+          height: 1,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 2, // Para Android
+      
+  },
+ 
 
     input:{
-        backgroundColor:COLORS.gray5,
-        padding:10,
-        borderRadius:6,
-        marginBottom:10,
-        shadowColor: '#000', // Sombra para dar profundidade
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 2, // Para Android
+      flex:1,
+      padding: 10,
+        
     },
 
     footer:{

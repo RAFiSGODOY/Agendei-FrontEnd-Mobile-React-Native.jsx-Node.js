@@ -4,8 +4,9 @@ import Appointments from "../../components/appointments/appointments.jsx";
 import { useEffect, useState } from "react";
 import api from "../../constants/api.js";
 import AlertModal from "../../components/modal/modal.jsx";
-
 import Button from "../../components/button/button.jsx";
+
+
 function AbaCalendar(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const [textModal, setTextModal] = useState("Ocorreu um erro. Tente novamente mais tarde");
@@ -37,7 +38,6 @@ function AbaCalendar(props) {
     async function DeleteAppointments(id_appointment) {
         try {
             await api.delete("/appointments/" + id_appointment);
-           
             LoadAppointments();
             setTextModal("Agendamento Cancelado!");
             setModalVisible(true);

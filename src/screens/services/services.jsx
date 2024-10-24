@@ -61,7 +61,7 @@ function Services(props) {
                 </View>
             </View>
             <View style={styles.AlinharSP}>
-                <Text style={styles.Prestados}>Serviços Prestados</Text>
+                <Text style={styles.Prestados}>Serviços Prestados </Text>
                 <View style={styles.line}></View>
             </View>
 

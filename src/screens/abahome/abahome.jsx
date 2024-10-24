@@ -49,7 +49,7 @@ function AbaHome(props) {
 
     return (<View style={styles.container}>
         <Text style={styles.text}>
-            Agende os seus serviços médicos
+            Serviços médicos disponíveis:
         </Text>
         {loading ? ( 
                 <View style={styles.LoadingContainer}>

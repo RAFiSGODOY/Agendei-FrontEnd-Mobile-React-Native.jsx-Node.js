@@ -14,8 +14,8 @@ export const styles = {
   },
 
   logo: {
-    width: 100,
-    height: 23,
+    width: 190,
+    height: 43,
   },
 
   input: {
@@ -31,6 +31,29 @@ export const styles = {
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 2, // Para Android
+
+  },
+  containerInput2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.gray5,
+    borderRadius: 6,
+    marginBottom: 15,
+    shadowColor: '#000', // Sombra para dar profundidade
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 2, // Para Android
+
+  },
+
+
+  input2: {
+    flex: 1,
+    padding: 10,
 
   },
 
